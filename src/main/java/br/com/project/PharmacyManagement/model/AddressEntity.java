@@ -34,6 +34,6 @@ public class AddressEntity {
     @Column(name = "longitude", nullable = false, precision = 9, scale = 6)
     private BigDecimal longitude;
 
-    @OneToOne(mappedBy = "pharmacy")
+    @OneToOne(mappedBy = "address")
     private PharmacyEntity pharmacy;
 }
