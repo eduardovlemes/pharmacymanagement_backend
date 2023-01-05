@@ -20,4 +20,7 @@ public class DrugEntityController {
 
     @GetMapping
     public List<DrugEntity> listALl() {return drugEntityService.findAll();}
+
+    @GetMapping("/{id}")
+    public DrugEntity getById (@PathVariable Long id){return drugEntityService.findById(id);}
 }
