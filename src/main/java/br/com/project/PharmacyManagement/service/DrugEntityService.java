@@ -14,4 +14,6 @@ public class DrugEntityService {
     private DrugEntityRepository drugEntityRepository;
 
     public void save(DrugEntity drugEntity){drugEntityRepository.save(drugEntity);}
+
+    public List<DrugEntity> findAll(){return (List<DrugEntity>) drugEntityRepository.findAll();}
 }
