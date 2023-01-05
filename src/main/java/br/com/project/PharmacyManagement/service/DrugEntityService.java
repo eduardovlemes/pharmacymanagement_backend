@@ -18,4 +18,6 @@ public class DrugEntityService {
     public List<DrugEntity> findAll(){return (List<DrugEntity>) drugEntityRepository.findAll();}
 
     public DrugEntity findById(Long id){return drugEntityRepository.findById(id).get();}
+
+    public void update(DrugEntity drugEntity){drugEntityRepository.save(drugEntity);}
 }

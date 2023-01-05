@@ -23,4 +23,7 @@ public class DrugEntityController {
 
     @GetMapping("/{id}")
     public DrugEntity getById (@PathVariable Long id){return drugEntityService.findById(id);}
+
+    @PutMapping
+    public void update(@RequestBody DrugEntity drugEntity){drugEntityService.save(drugEntity);}
 }
