@@ -15,11 +15,13 @@ public class DrugEntityService {
     @Autowired
     private DrugEntityRepository drugEntityRepository;
 
-    public void saveDrug(DrugEntity drugEntity){drugEntityRepository.save(drugEntity);}
+    public void saveDrug(DrugEntity drugEntity){
+        drugEntityRepository.save(drugEntity);
+    }
 
-    public List<DrugEntity> getAll(){return (List<DrugEntity>) drugEntityRepository.findAll();}
-
-    public DrugEntity getById(Long id){return drugEntityRepository.findById(id).get();}
+    public List<DrugEntity> getAll(){
+        return (List<DrugEntity>) drugEntityRepository.findAll();
+    }
 
     public Long update(Long id, DrugDTO drugDTO){
         DrugEntity drug = findDrugById(id);
@@ -31,7 +33,6 @@ public class DrugEntityService {
         drug.setType(drugDTO.getType());
 
         saveDrug(drug);
-
         return id;
     }
 
@@ -40,6 +41,7 @@ public class DrugEntityService {
         drugEntityRepository.delete(drugEntity);}
 
     public DrugEntity findDrugById(Long id){
-        return this.drugEntityRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Não existe medicamento com esse id."));
+        return this.drugEntityRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Não existe medicamento com esse id."));
     }
 }
