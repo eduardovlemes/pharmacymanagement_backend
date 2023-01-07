@@ -1,5 +1,6 @@
 package br.com.project.PharmacyManagement.model;
 
+import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,8 @@ import lombok.Setter;
 public class PharmacyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pharmacy_id_seq")
+    @SequenceGenerator(name = "pharmacy_id_seq", sequenceName = "pharmacy_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -33,6 +35,7 @@ public class PharmacyEntity {
     @Column(name = "cellphone", nullable = false, length = 11)
     private String cellphone;
 
-    @OneToOne (mappedBy = "pharmacy", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
     private AddressEntity address;
 }
