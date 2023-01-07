@@ -15,14 +15,18 @@ public class DrugDTO {
 
     @NotNull(message = "O nome do medicamento é obrigatório.")
     private String drugName;
+
     @NotNull(message = "O nome do laboratório do medicamento é obrigatório.")
     private String lab;
+
     @NotNull(message = "A dosagem do medicamento é obrigatória.")
     private String dosage;
 
     private String description;
+
     @NotNull(message = "O preço do medicamento é obrigatório.")
     private BigDecimal price;
+
     @NotNull(message = "O tipo do medicamento é obrigatório.")
     private String type;
 

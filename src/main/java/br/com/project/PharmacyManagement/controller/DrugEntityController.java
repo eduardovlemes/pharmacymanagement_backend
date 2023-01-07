@@ -42,7 +42,8 @@ public class DrugEntityController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(
+            @PathVariable Long id){
         drugEntityService.delete(id);
     }
 }
