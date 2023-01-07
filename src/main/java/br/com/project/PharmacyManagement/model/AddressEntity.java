@@ -1,5 +1,6 @@
 package br.com.project.PharmacyManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,8 @@ import java.math.BigDecimal;
 @Setter
 public class AddressEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_address_seq")
+    @SequenceGenerator(name = "id_address_seq", sequenceName = "id_address_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -42,10 +44,6 @@ public class AddressEntity {
 
     @Column(name = "longitude", nullable = false, precision = 9, scale = 6)
     private BigDecimal longitude;
-
-    @OneToOne
-    @JoinColumn(name = "id_pharmacy", referencedColumnName = "id")
-    private PharmacyEntity pharmacy;
 
 //    public AddressEntity(String postalcode, String street, Integer number, String district, String city, String state, String addressCompl, BigDecimal latitude, BigDecimal longitude) {
 //    this.postalcode = postalcode;

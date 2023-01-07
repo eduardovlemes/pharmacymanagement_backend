@@ -11,7 +11,8 @@ import lombok.Setter;
 public class PharmacyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_pharmacy_seq")
+    @SequenceGenerator(name = "id_pharmacy_seq", sequenceName = "id_pharmacy_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -33,6 +34,8 @@ public class PharmacyEntity {
     @Column(name = "cellphone", nullable = false, length = 11)
     private String cellphone;
 
-    @OneToOne (mappedBy = "pharmacy", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @Transient
+    @OneToOne
+    @JoinColumn(name = "id_address", referencedColumnName = "id")
     private AddressEntity address;
 }

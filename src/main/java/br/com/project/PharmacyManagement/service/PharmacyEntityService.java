@@ -3,11 +3,14 @@ package br.com.project.PharmacyManagement.service;
 import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.AddressEntity;
+import br.com.project.PharmacyManagement.model.DrugEntity;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
 import br.com.project.PharmacyManagement.repository.AddressEntityRepository;
 import br.com.project.PharmacyManagement.repository.PharmacyEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PharmacyEntityService {
@@ -33,7 +36,6 @@ public class PharmacyEntityService {
         pharmacy.setCellphone(pharmacyDTO.getCellphone());
 
         AddressDTO addressDTO = pharmacyDTO.getAddress();
-
         if(addressDTO != null){
             AddressEntity address = new AddressEntity();
             address.setId(addressDTO.getId());
@@ -51,4 +53,9 @@ public class PharmacyEntityService {
         }
         return pharmacy;
     }
+
+    public List<PharmacyEntity> findAllPharmacies(){
+        return pharmacyEntityRepository.findAll();
+    }
+
 }

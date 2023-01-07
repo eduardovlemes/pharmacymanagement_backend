@@ -6,12 +6,10 @@ import br.com.project.PharmacyManagement.model.PharmacyEntity;
 import br.com.project.PharmacyManagement.service.PharmacyEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/farmacia")
@@ -28,5 +26,11 @@ public class PharmacyEntityController {
         PharmacyEntity savedPharmacy = pharmacyEntityService.savePharmacy(pharmacy);
 
         return ResponseEntity.ok(savedPharmacy);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PharmacyEntity>> getAllPharmacy(){
+        List<PharmacyEntity> pharmacies = pharmacyEntityService.findAllPharmacies();
+        return ResponseEntity.ok(pharmacies);
     }
 }
