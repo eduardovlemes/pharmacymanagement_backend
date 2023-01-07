@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PharmacyEntityService {
@@ -51,7 +52,7 @@ public class PharmacyEntityService {
     }
 
     public List<PharmacyEntity> findAllPharmacies(){
-        return pharmacyEntityRepository.findAll();
+        return pharmacyEntityRepository.findAll().stream().peek(pharmacyEntity -> pharmacyEntity.getAddress().getId()).collect(Collectors.toList());
     }
 
 }
