@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/farmacia")
 public class PharmacyEntityController {
@@ -19,11 +21,12 @@ public class PharmacyEntityController {
     private PharmacyEntityService pharmacyEntityService;
 
     @PostMapping
-    public ResponseEntity<PharmacyEntity> register(
-            @RequestBody PharmacyDTO pharmacyDTO
-            ){
-        PharmacyEntity pharmacy = pharmacyEntityService.savePharmacy(pharmacyDTO);
+    public ResponseEntity<PharmacyEntity> createPharmacy(
+            @Valid @RequestBody PharmacyDTO pharmacyDTO){
+        PharmacyEntity pharmacy = pharmacyEntityService.fromDTO(pharmacyDTO);
 
-        return ResponseEntity.ok(pharmacy);
+        PharmacyEntity savedPharmacy = pharmacyEntityService.savePharmacy(pharmacy);
+
+        return ResponseEntity.ok(savedPharmacy);
     }
 }

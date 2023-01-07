@@ -22,9 +22,11 @@ public class UserEntityController {
 
     @GetMapping("/login")
     public ResponseEntity<UserEntity> login(
-            @RequestParam(required = false) String email, @RequestParam(required = false) String password
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String password
     ) {
         UserEntity login = userEntityService.findByEmail(email);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

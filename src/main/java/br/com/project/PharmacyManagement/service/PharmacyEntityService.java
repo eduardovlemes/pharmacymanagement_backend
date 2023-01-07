@@ -1,5 +1,6 @@
 package br.com.project.PharmacyManagement.service;
 
+import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.AddressEntity;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
@@ -13,37 +14,41 @@ public class PharmacyEntityService {
 
     @Autowired
     private PharmacyEntityRepository pharmacyEntityRepository;
+
     @Autowired
     private AddressEntityRepository addressEntityRepository;
 
-
-    public PharmacyEntity savePharmacy(PharmacyDTO pharmacyDTO){
-        AddressEntity addressEntity = new AddressEntity(
-                pharmacyDTO.getAddressDTO().getPostalcode(),
-                pharmacyDTO.getAddressDTO().getStreet(),
-                pharmacyDTO.getAddressDTO().getNumber(),
-                pharmacyDTO.getAddressDTO().getDistrict(),
-                pharmacyDTO.getAddressDTO().getCity(),
-                pharmacyDTO.getAddressDTO().getState(),
-                pharmacyDTO.getAddressDTO().getAddressCompl(),
-                pharmacyDTO.getAddressDTO().getLatitude(),
-                pharmacyDTO.getAddressDTO().getLongitude()
-        );
-        addressEntity = addressEntityRepository.save(addressEntity);
-        PharmacyEntity pharmacyEntity = new PharmacyEntity(pharmacyDTO, addressEntity);
-
-        return  pharmacyEntityRepository.save(pharmacyEntity);
+    public PharmacyEntity savePharmacy(PharmacyEntity pharmacy){
+        return pharmacyEntityRepository.save(pharmacy);
     }
 
-//    private PharmacyEntity convertDTO(PharmacyDTO pharmacyDTO){
-//        PharmacyEntity pharmacy = new PharmacyEntity();
-//        pharmacy.setCorporateName(pharmacyDTO.getCorporateName());
-//        pharmacy.setCnpj(pharmacyDTO.getCnpj());
-//        pharmacy.setTradeName(pharmacyDTO.getTradeName());
-//        pharmacy.setEmail(pharmacyDTO.getEmail());
-//        pharmacy.setPhone(pharmacyDTO.getPhone());
-//        pharmacy.setCellphone(pharmacyDTO.getCellphone());
-//
-//        return pharmacy;
-//    }
+    public PharmacyEntity fromDTO(PharmacyDTO pharmacyDTO){
+        PharmacyEntity pharmacy = new PharmacyEntity();
+        pharmacy.setId(pharmacyDTO.getId());
+        pharmacy.setCorporateName(pharmacyDTO.getCorporateName());
+        pharmacy.setCnpj(pharmacyDTO.getCnpj());
+        pharmacy.setTradeName(pharmacyDTO.getTradeName());
+        pharmacy.setEmail(pharmacyDTO.getEmail());
+        pharmacy.setPhone(pharmacyDTO.getPhone());
+        pharmacy.setCellphone(pharmacyDTO.getCellphone());
+
+        AddressDTO addressDTO = pharmacyDTO.getAddress();
+
+        if(addressDTO != null){
+            AddressEntity address = new AddressEntity();
+            address.setId(addressDTO.getId());
+            address.setPostalcode(addressDTO.getPostalcode());
+            address.setStreet(addressDTO.getStreet());
+            address.setNumber(addressDTO.getNumber());
+            address.setDistrict(addressDTO.getDistrict());
+            address.setCity(addressDTO.getCity());
+            address.setState(addressDTO.getState());
+            address.setAddressCompl(addressDTO.getAddressCompl());
+            address.setLatitude(addressDTO.getLatitude());
+            address.setLongitude(addressDTO.getLongitude());
+
+            pharmacy.setAddress(address);
+        }
+        return pharmacy;
+    }
 }
