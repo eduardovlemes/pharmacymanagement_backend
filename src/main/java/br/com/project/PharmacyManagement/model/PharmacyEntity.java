@@ -1,5 +1,6 @@
 package br.com.project.PharmacyManagement.model;
 
+import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +29,8 @@ public class PharmacyEntity {
 
     @OneToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id")
-    private AddressEntity address;
+    private AddressEntity addressEntity;
+
+    public PharmacyEntity(PharmacyDTO pharmacyDTO, AddressEntity addressEntity) {
+    }
 }

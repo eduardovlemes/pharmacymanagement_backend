@@ -34,6 +34,18 @@ public class AddressEntity {
     @Column(name = "longitude", nullable = false, precision = 9, scale = 6)
     private BigDecimal longitude;
 
-    @OneToOne(mappedBy = "address")
-    private PharmacyEntity pharmacy;
+    @OneToOne(mappedBy = "addressEntity")
+    private PharmacyEntity pharmacyEntity;
+
+    public AddressEntity(String postalcode, String street, Integer number, String district, String city, String state, String addressCompl, BigDecimal latitude, BigDecimal longitude) {
+    this.postalcode = postalcode;
+    this.street = street;
+    this.number = number;
+    this.district = district;
+    this.city = city;
+    this.state = state;
+    this.addressCompl = addressCompl;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    }
 }
