@@ -19,13 +19,12 @@ public class PharmacyEntityController {
     private PharmacyEntityService pharmacyEntityService;
 
     @PostMapping
-    public ResponseEntity<PharmacyEntity> createPharmacy(
+    public ResponseEntity<Void> createPharmacy(
             @Valid @RequestBody PharmacyDTO pharmacyDTO){
-        PharmacyEntity pharmacy = pharmacyEntityService.fromDTO(pharmacyDTO);
 
-        PharmacyEntity savedPharmacy = pharmacyEntityService.savePharmacy(pharmacy);
+       pharmacyEntityService.savePharmacyAndAddress(pharmacyDTO);
 
-        return ResponseEntity.ok(savedPharmacy);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping

@@ -36,6 +36,6 @@ public class PharmacyEntity {
 
     @Transient
     @OneToOne
-    @JoinColumn(name = "id_address", referencedColumnName = "id")
+    @JoinColumn(name = "id_address")
     private AddressEntity address;
 }
