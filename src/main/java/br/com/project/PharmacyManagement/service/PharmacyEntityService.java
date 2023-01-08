@@ -5,6 +5,7 @@ import br.com.project.PharmacyManagement.model.AddressEntity;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
 import br.com.project.PharmacyManagement.repository.AddressEntityRepository;
 import br.com.project.PharmacyManagement.repository.PharmacyEntityRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,11 @@ public class PharmacyEntityService {
 
     public List<PharmacyEntity> findAllPharmacies(){
         return pharmacyEntityRepository.findAll().stream().peek(pharmacyEntity -> pharmacyEntity.getAddress().getId()).collect(Collectors.toList());
+    }
+
+    public PharmacyEntity findById (Long id) {
+        return pharmacyEntityRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Farmácia não encontrada."));
     }
 
 }
