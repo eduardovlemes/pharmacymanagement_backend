@@ -1,5 +1,6 @@
 package br.com.project.PharmacyManagement.service;
 
+import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.AddressEntity;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
@@ -59,6 +60,31 @@ public class PharmacyEntityService {
     public PharmacyEntity findById (Long id) {
         return pharmacyEntityRepository.findById(id).orElseThrow(()->
                 new EntityNotFoundException("Farmácia não encontrada."));
+    }
+
+    public void updatePharmacy(Long id, PharmacyDTO pharmacyDTO, AddressDTO addressDTO){
+        PharmacyEntity pharmacy = pharmacyEntityRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Farmácia não encontrada."));
+
+        AddressEntity address = pharmacy.getAddress();
+        address.setPostalcode(addressDTO.getPostalcode());
+        address.setStreet(addressDTO.getStreet());
+        address.setNumber(addressDTO.getNumber());
+        address.setDistrict(addressDTO.getDistrict());
+        address.setCity(addressDTO.getCity());
+        address.setState(addressDTO.getState());
+        address.setAddressCompl(addressDTO.getAddressCompl());
+        address.setLatitude(addressDTO.getLatitude());
+        address.setLongitude(addressDTO.getLongitude());
+
+        pharmacy.setCorporateName(pharmacyDTO.getCorporateName());
+        pharmacy.setCnpj(pharmacyDTO.getCnpj());
+        pharmacy.setTradeName(pharmacyDTO.getTradeName());
+        pharmacy.setEmail(pharmacyDTO.getEmail());
+        pharmacy.setPhone(pharmacyDTO.getPhone());
+        pharmacy.setCellphone(pharmacyDTO.getCellphone());
+
+        pharmacyEntityRepository.save(pharmacy);
     }
 
 }

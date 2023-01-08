@@ -1,6 +1,7 @@
 package br.com.project.PharmacyManagement.controller;
 
 
+import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
 import br.com.project.PharmacyManagement.service.PharmacyEntityService;
@@ -36,5 +37,13 @@ public class PharmacyEntityController {
     @GetMapping("/{id}")
     public PharmacyEntity findPharmacyById (@PathVariable Long id) {
         return pharmacyEntityService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public  ResponseEntity<Void> updatePharmacy(@PathVariable Long id, @RequestBody PharmacyDTO pharmacyDTO, @RequestBody AddressDTO addressDTO){
+        pharmacyEntityService.updatePharmacy(id, pharmacyDTO, addressDTO);
+
+        return ResponseEntity.noContent().build();
+
     }
 }
