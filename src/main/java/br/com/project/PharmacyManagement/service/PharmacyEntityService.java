@@ -61,4 +61,28 @@ public class PharmacyEntityService {
                 new EntityNotFoundException("Farmácia não encontrada."));
     }
 
+    public void updatePharmacy(Long id, PharmacyDTO pharmacyDTO){
+        PharmacyEntity pharmacy = pharmacyEntityRepository.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Farmácia não encontrada."));
+
+        AddressEntity address = pharmacy.getAddress();
+        address.setPostalcode(pharmacyDTO.getAddress().getPostalcode());
+        address.setStreet(pharmacyDTO.getAddress().getStreet());
+        address.setNumber(pharmacyDTO.getAddress().getNumber());
+        address.setDistrict(pharmacyDTO.getAddress().getDistrict());
+        address.setCity(pharmacyDTO.getAddress().getCity());
+        address.setState(pharmacyDTO.getAddress().getState());
+        address.setAddressCompl(pharmacyDTO.getAddress().getAddressCompl());
+        address.setLatitude(pharmacyDTO.getAddress().getLatitude());
+        address.setLongitude(pharmacyDTO.getAddress().getLongitude());
+
+        pharmacy.setCorporateName(pharmacyDTO.getCorporateName());
+        pharmacy.setCnpj(pharmacyDTO.getCnpj());
+        pharmacy.setTradeName(pharmacyDTO.getTradeName());
+        pharmacy.setEmail(pharmacyDTO.getEmail());
+        pharmacy.setPhone(pharmacyDTO.getPhone());
+        pharmacy.setCellphone(pharmacyDTO.getCellphone());
+
+        pharmacyEntityRepository.save(pharmacy);
+    }
 }

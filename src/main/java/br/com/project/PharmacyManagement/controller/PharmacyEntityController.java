@@ -37,4 +37,15 @@ public class PharmacyEntityController {
     public PharmacyEntity findPharmacyById (@PathVariable Long id) {
         return pharmacyEntityService.findById(id);
     }
+
+    @PutMapping("/{id}")
+    public  ResponseEntity<Void> updatePharmacy(
+            @PathVariable Long id,
+            @RequestBody PharmacyDTO pharmacyDTO){
+
+        pharmacyEntityService.updatePharmacy(id, pharmacyDTO);
+
+        return ResponseEntity.noContent().build();
+
+    }
 }
