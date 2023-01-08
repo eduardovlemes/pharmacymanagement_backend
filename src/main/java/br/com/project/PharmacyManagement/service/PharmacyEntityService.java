@@ -1,6 +1,5 @@
 package br.com.project.PharmacyManagement.service;
 
-import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.AddressEntity;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
@@ -62,20 +61,20 @@ public class PharmacyEntityService {
                 new EntityNotFoundException("Farmácia não encontrada."));
     }
 
-    public void updatePharmacy(Long id, PharmacyDTO pharmacyDTO, AddressDTO addressDTO){
+    public void updatePharmacy(Long id, PharmacyDTO pharmacyDTO){
         PharmacyEntity pharmacy = pharmacyEntityRepository.findById(id).orElseThrow(()->
                 new EntityNotFoundException("Farmácia não encontrada."));
 
         AddressEntity address = pharmacy.getAddress();
-        address.setPostalcode(addressDTO.getPostalcode());
-        address.setStreet(addressDTO.getStreet());
-        address.setNumber(addressDTO.getNumber());
-        address.setDistrict(addressDTO.getDistrict());
-        address.setCity(addressDTO.getCity());
-        address.setState(addressDTO.getState());
-        address.setAddressCompl(addressDTO.getAddressCompl());
-        address.setLatitude(addressDTO.getLatitude());
-        address.setLongitude(addressDTO.getLongitude());
+        address.setPostalcode(pharmacyDTO.getAddress().getPostalcode());
+        address.setStreet(pharmacyDTO.getAddress().getStreet());
+        address.setNumber(pharmacyDTO.getAddress().getNumber());
+        address.setDistrict(pharmacyDTO.getAddress().getDistrict());
+        address.setCity(pharmacyDTO.getAddress().getCity());
+        address.setState(pharmacyDTO.getAddress().getState());
+        address.setAddressCompl(pharmacyDTO.getAddress().getAddressCompl());
+        address.setLatitude(pharmacyDTO.getAddress().getLatitude());
+        address.setLongitude(pharmacyDTO.getAddress().getLongitude());
 
         pharmacy.setCorporateName(pharmacyDTO.getCorporateName());
         pharmacy.setCnpj(pharmacyDTO.getCnpj());
@@ -86,5 +85,4 @@ public class PharmacyEntityService {
 
         pharmacyEntityRepository.save(pharmacy);
     }
-
 }
