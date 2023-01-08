@@ -46,6 +46,12 @@ public class PharmacyEntityController {
         pharmacyEntityService.updatePharmacy(id, pharmacyDTO);
 
         return ResponseEntity.noContent().build();
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id){
+        pharmacyEntityService.delete(id);
+        return ResponseEntity.accepted().build();
     }
 }

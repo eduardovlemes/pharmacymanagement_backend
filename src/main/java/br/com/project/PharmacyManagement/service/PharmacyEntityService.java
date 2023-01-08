@@ -85,4 +85,8 @@ public class PharmacyEntityService {
 
         pharmacyEntityRepository.save(pharmacy);
     }
+
+    public void delete(Long id){
+        pharmacyEntityRepository.deleteById(id);
+    }
 }

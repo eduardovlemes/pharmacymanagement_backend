@@ -1,6 +1,5 @@
 package br.com.project.PharmacyManagement.model;
 
-import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +34,7 @@ public class PharmacyEntity {
     @Column(name = "cellphone", nullable = false, length = 11)
     private String cellphone;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 }
