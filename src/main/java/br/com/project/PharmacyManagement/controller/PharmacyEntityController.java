@@ -32,4 +32,9 @@ public class PharmacyEntityController {
         List<PharmacyEntity> pharmacies = pharmacyEntityService.findAllPharmacies();
         return ResponseEntity.ok(pharmacies);
     }
+
+    @GetMapping("/{id}")
+    public PharmacyEntity findPharmacyById (@PathVariable Long id) {
+        return pharmacyEntityService.findById(id);
+    }
 }
