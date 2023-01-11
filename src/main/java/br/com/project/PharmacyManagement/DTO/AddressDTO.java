@@ -13,22 +13,22 @@ public class AddressDTO {
     private Long id;
 
     @NotNull(message = "O CEP do endereço é obrigatório.")
-    private String postalcode;
+    private String cep;
 
     @NotNull(message = "A rua do endereço é obrigatório.")
-    private String street;
+    private String logradouro;
 
     @NotNull(message = "O número do endereço é obrigatório.")
     private Integer number;
 
     @NotNull(message = "O bairro do endereço é obrigatório.")
-    private String district;
+    private String bairro;
 
     @NotNull(message = "A cidade do endereço é obrigatório.")
-    private String city;
+    private String localidade;
 
     @NotNull(message = "O estado do endereço é obrigatório.")
-    private String state;
+    private String uf;
 
     private String addressCompl;
 
@@ -42,12 +42,12 @@ public class AddressDTO {
     public String toString() {
         return "AddressDTO{" +
                 "id=" + id +
-                ", postalcode='" + postalcode + '\'' +
-                ", street='" + street + '\'' +
+                ", cep='" + cep + '\'' +
+                ", logradouro='" + logradouro + '\'' +
                 ", number=" + number +
-                ", district='" + district + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cidade='" + localidade + '\'' +
+                ", uf='" + uf + '\'' +
                 ", addressCompl='" + addressCompl + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
