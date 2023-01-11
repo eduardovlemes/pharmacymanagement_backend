@@ -14,24 +14,4 @@ public class AddressEntityService {
     @Autowired
     private PharmacyEntityRepository pharmacyEntityRepository;
 
-//    public AddressEntity saveAddress(AddressEntity addressEntity){
-//        return addressEntityRepository.save(addressEntity);
-
-//        AddressEntity address = convertDTO(addressDTO);
-//        address = addressEntityRepository.save(address);
-//        return address.getId();
-//}
-//    private AddressEntity convertDTO(AddressDTO addressDTO){
-//        AddressEntity address = new AddressEntity();
-//        address.setPostalcode(addressDTO.getPostalcode());
-//        address.setStreet(addressDTO.getStreet());
-//        address.setNumber(addressDTO.getNumber());
-//        address.setDistrict(addressDTO.getDistrict());
-//        address.setCity(addressDTO.getCity());
-//        address.setState(addressDTO.getState());
-//        address.setAddressCompl(addressDTO.getAddressCompl());
-//        address.setLatitude(addressDTO.getLatitude());
-//        address.setLongitude(addressDTO.getLongitude());
-//        return address;}
-//
 }
