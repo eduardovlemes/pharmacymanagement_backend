@@ -1,15 +1,18 @@
 package br.com.project.PharmacyManagement.controller;
 
 
+import br.com.project.PharmacyManagement.DTO.DefaultErrorResponse.DefaultResponse;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
 import br.com.project.PharmacyManagement.service.PharmacyEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/farmacia")
@@ -18,40 +21,87 @@ public class PharmacyEntityController {
     @Autowired
     private PharmacyEntityService pharmacyEntityService;
 
+
     @PostMapping
-    public ResponseEntity<Void> createPharmacy(
+    public ResponseEntity<DefaultResponse> createPharmacy(
             @Valid @RequestBody PharmacyDTO pharmacyDTO){
 
-       pharmacyEntityService.savePharmacyAndAddress(pharmacyDTO);
+        PharmacyEntity pharmacy = pharmacyEntityService.savePharmacyAndAddress(pharmacyDTO);
 
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(
+                new DefaultResponse<PharmacyEntity>(
+                        HttpStatus.CREATED.value(),
+                        pharmacy,
+                        "Farmácia cadastrada com sucesso!"
+                ),
+                HttpStatus.CREATED
+        );
     }
+
 
     @GetMapping
-    public ResponseEntity<List<PharmacyEntity>> getAllPharmacy(){
+    public ResponseEntity<DefaultResponse> getAllPharmacy(){
+
         List<PharmacyEntity> pharmacies = pharmacyEntityService.findAllPharmacies();
-        return ResponseEntity.ok(pharmacies);
+
+        return new ResponseEntity<>(
+                new DefaultResponse<List<PharmacyEntity>>(
+                        HttpStatus.OK.value(),
+                        pharmacies,
+                        "Farmácias encontradas com sucesso!"
+                ),
+                HttpStatus.OK
+        );
     }
+
 
     @GetMapping("/{id}")
-    public PharmacyEntity findPharmacyById (@PathVariable Long id) {
-        return pharmacyEntityService.findById(id);
+    public ResponseEntity<DefaultResponse> getPharmacyById(@PathVariable Long id) {
+
+        Optional<PharmacyEntity> pharmacy = pharmacyEntityService.findPharmacyById(id);
+
+        return new ResponseEntity<>(
+                new DefaultResponse<Optional<PharmacyEntity>>(
+                        HttpStatus.OK.value(),
+                        pharmacy,
+                        "Farmácia encontrada com sucesso!"
+                ),
+                HttpStatus.OK
+        );
     }
 
+
     @PutMapping("/{id}")
-    public  ResponseEntity<Void> updatePharmacy(
+    public  ResponseEntity<DefaultResponse> updatePharmacy(
             @PathVariable Long id,
             @RequestBody PharmacyDTO pharmacyDTO){
 
-        pharmacyEntityService.updatePharmacy(id, pharmacyDTO);
+        PharmacyEntity pharmacy = pharmacyEntityService.updatePharmacyById(id, pharmacyDTO);
 
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(
+                new DefaultResponse<PharmacyEntity>(
+                        HttpStatus.OK.value(),
+                        pharmacy,
+                        "Farmácia atualizada com sucesso!"
+                ),
+                HttpStatus.OK
+        );
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
+    public ResponseEntity<DefaultResponse> deletePharmacy(
             @PathVariable Long id){
-        pharmacyEntityService.delete(id);
-        return ResponseEntity.accepted().build();
+
+        PharmacyEntity pharmacy = pharmacyEntityService.deletePharmacyById(id);
+
+        return new ResponseEntity<>(
+                new DefaultResponse<PharmacyEntity>(
+                        HttpStatus.ACCEPTED.value(),
+                        pharmacy,
+                        "Farmácia deletada com sucesso!"
+                ),
+                HttpStatus.ACCEPTED
+        );
     }
 }

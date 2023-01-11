@@ -13,4 +13,5 @@ public class DefaultResponse<T>{
 
     private Integer status;
     private T data;
+    private String message;
 }
