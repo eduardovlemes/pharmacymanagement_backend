@@ -1,6 +1,6 @@
 CREATE TABLE "address" (
 id bigserial primary key,
-postalcode varchar(8) not null,
+postalcode varchar(9) not null,
 street varchar(200) not null,
 number int not null,
 district varchar(100) not null,
