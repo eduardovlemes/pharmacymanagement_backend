@@ -17,7 +17,7 @@ public class AddressEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "postalcode", nullable = false, length = 8)
+    @Column(name = "postalcode", nullable = false, length = 9)
     private String postalcode;
 
     @Column(name = "street", nullable = false, length = 200)

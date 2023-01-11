@@ -1,16 +1,23 @@
 package br.com.project.PharmacyManagement.controller;
 
 
+import br.com.project.PharmacyManagement.DTO.AddressDTO;
 import br.com.project.PharmacyManagement.DTO.DefaultErrorResponse.DefaultResponse;
 import br.com.project.PharmacyManagement.DTO.PharmacyDTO;
 import br.com.project.PharmacyManagement.model.PharmacyEntity;
 import br.com.project.PharmacyManagement.service.PharmacyEntityService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +31,26 @@ public class PharmacyEntityController {
 
     @PostMapping
     public ResponseEntity<DefaultResponse> createPharmacy(
-            @Valid @RequestBody PharmacyDTO pharmacyDTO){
+            @Valid @RequestBody PharmacyDTO pharmacyDTO) throws Exception {
+
+        URL url = new URL ("https://viacep.com.br/ws/"+pharmacyDTO.getAddress().getCep()+"/json/");
+        URLConnection connection = url.openConnection();
+        InputStream inputStream = connection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+        String cep = "";
+        StringBuilder jsonCep = new StringBuilder();
+        while ((cep = bufferedReader.readLine()) != null){
+            jsonCep.append(cep);
+        }
+
+        AddressDTO addressDTOAux = new Gson().fromJson(jsonCep.toString(), AddressDTO.class);
+        pharmacyDTO.getAddress().setCep(addressDTOAux.getCep());
+        pharmacyDTO.getAddress().setLogradouro(addressDTOAux.getLogradouro());
+        pharmacyDTO.getAddress().setLocalidade(addressDTOAux.getLocalidade());
+        pharmacyDTO.getAddress().setBairro(addressDTOAux.getBairro());
+        pharmacyDTO.getAddress().setUf(addressDTOAux.getUf());
+
 
         PharmacyEntity pharmacy = pharmacyEntityService.savePharmacyAndAddress(pharmacyDTO);
 
@@ -74,7 +100,25 @@ public class PharmacyEntityController {
     @PutMapping("/{id}")
     public  ResponseEntity<DefaultResponse> updatePharmacy(
             @PathVariable Long id,
-            @RequestBody PharmacyDTO pharmacyDTO){
+            @RequestBody PharmacyDTO pharmacyDTO) throws Exception {
+
+        URL url = new URL ("https://viacep.com.br/ws/"+pharmacyDTO.getAddress().getCep()+"/json/");
+        URLConnection connection = url.openConnection();
+        InputStream inputStream = connection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+        String cep = "";
+        StringBuilder jsonCep = new StringBuilder();
+        while ((cep = bufferedReader.readLine()) != null){
+            jsonCep.append(cep);
+        }
+
+        AddressDTO addressDTOAux = new Gson().fromJson(jsonCep.toString(), AddressDTO.class);
+        pharmacyDTO.getAddress().setCep(addressDTOAux.getCep());
+        pharmacyDTO.getAddress().setLogradouro(addressDTOAux.getLogradouro());
+        pharmacyDTO.getAddress().setLocalidade(addressDTOAux.getLocalidade());
+        pharmacyDTO.getAddress().setBairro(addressDTOAux.getBairro());
+        pharmacyDTO.getAddress().setUf(addressDTOAux.getUf());
 
         PharmacyEntity pharmacy = pharmacyEntityService.updatePharmacyById(id, pharmacyDTO);
 

@@ -30,12 +30,12 @@ public class PharmacyEntityService {
         try {
             AddressEntity address = new AddressEntity();
             address.setId(pharmacyDTO.getAddress().getId());
-            address.setPostalcode(pharmacyDTO.getAddress().getPostalcode());
-            address.setStreet(pharmacyDTO.getAddress().getStreet());
+            address.setPostalcode(pharmacyDTO.getAddress().getCep());
+            address.setStreet(pharmacyDTO.getAddress().getLogradouro());
             address.setNumber(pharmacyDTO.getAddress().getNumber());
-            address.setDistrict(pharmacyDTO.getAddress().getDistrict());
-            address.setCity(pharmacyDTO.getAddress().getCity());
-            address.setState(pharmacyDTO.getAddress().getState());
+            address.setDistrict(pharmacyDTO.getAddress().getBairro());
+            address.setCity(pharmacyDTO.getAddress().getLocalidade());
+            address.setState(pharmacyDTO.getAddress().getUf());
             address.setAddressCompl(pharmacyDTO.getAddress().getAddressCompl());
             address.setLatitude(pharmacyDTO.getAddress().getLatitude());
             address.setLongitude(pharmacyDTO.getAddress().getLongitude());
@@ -89,12 +89,12 @@ public class PharmacyEntityService {
                     new NotFoundException("O id da farmácia não foi encontrado no banco de dados."));
 
             AddressEntity address = pharmacy.getAddress();
-            address.setPostalcode(pharmacyDTO.getAddress().getPostalcode());
-            address.setStreet(pharmacyDTO.getAddress().getStreet());
+            address.setPostalcode(pharmacyDTO.getAddress().getCep());
+            address.setStreet(pharmacyDTO.getAddress().getLogradouro());
             address.setNumber(pharmacyDTO.getAddress().getNumber());
-            address.setDistrict(pharmacyDTO.getAddress().getDistrict());
-            address.setCity(pharmacyDTO.getAddress().getCity());
-            address.setState(pharmacyDTO.getAddress().getState());
+            address.setDistrict(pharmacyDTO.getAddress().getBairro());
+            address.setCity(pharmacyDTO.getAddress().getLocalidade());
+            address.setState(pharmacyDTO.getAddress().getUf());
             address.setAddressCompl(pharmacyDTO.getAddress().getAddressCompl());
             address.setLatitude(pharmacyDTO.getAddress().getLatitude());
             address.setLongitude(pharmacyDTO.getAddress().getLongitude());
