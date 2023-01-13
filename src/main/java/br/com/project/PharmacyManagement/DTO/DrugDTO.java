@@ -1,6 +1,7 @@
 package br.com.project.PharmacyManagement.DTO;
 
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,21 +14,21 @@ public class DrugDTO {
 
     private Long id;
 
-    @NotNull(message = "O nome do medicamento é obrigatório.")
+    @NotBlank(message = "O NOME do medicamento não deve estar em branco.")
     private String drugName;
 
-    @NotNull(message = "O nome do laboratório do medicamento é obrigatório.")
+    @NotBlank(message = "O LABORATÓRIO não deve estar em branco.")
     private String lab;
 
-    @NotNull(message = "A dosagem do medicamento é obrigatória.")
+    @NotBlank(message = "A DOSAGEM não deve estar em branco.")
     private String dosage;
 
     private String description;
 
-    @NotNull(message = "O preço do medicamento é obrigatório.")
+    @NotNull(message = "O PREÇO não deve estar em branco.")
     private BigDecimal price;
 
-    @NotNull(message = "O tipo do medicamento é obrigatório.")
+    @NotBlank(message = "O TIPO não deve estar em branco.")
     private String type;
 
     @Override
