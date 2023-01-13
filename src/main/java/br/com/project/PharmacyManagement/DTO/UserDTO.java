@@ -13,7 +13,7 @@ public class UserDTO {
     private Long id;
 
     @NotBlank(message = "O EMAIL não deve estar em branco.")
-    @Email(message = "Email inválido.")
+    @Email(message = "EMAIL inválido.")
     private String email;
 
     @NotBlank(message = "O SENHA não deve estar em branco.")

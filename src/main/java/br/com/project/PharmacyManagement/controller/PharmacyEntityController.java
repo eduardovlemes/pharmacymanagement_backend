@@ -31,7 +31,7 @@ public class PharmacyEntityController {
 
     @PostMapping
     public ResponseEntity<DefaultResponse> createPharmacy(
-            @Valid @RequestBody PharmacyDTO pharmacyDTO) throws Exception {
+            @RequestBody @Valid PharmacyDTO pharmacyDTO) throws Exception {
 
         URL url = new URL ("https://viacep.com.br/ws/"+pharmacyDTO.getAddress().getCep()+"/json/");
         URLConnection connection = url.openConnection();
@@ -100,7 +100,7 @@ public class PharmacyEntityController {
     @PutMapping("/{id}")
     public  ResponseEntity<DefaultResponse> updatePharmacy(
             @PathVariable Long id,
-            @RequestBody PharmacyDTO pharmacyDTO) throws Exception {
+            @RequestBody @Valid PharmacyDTO pharmacyDTO) throws Exception {
 
         URL url = new URL ("https://viacep.com.br/ws/"+pharmacyDTO.getAddress().getCep()+"/json/");
         URLConnection connection = url.openConnection();
