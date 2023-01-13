@@ -1,9 +1,10 @@
 package br.com.project.PharmacyManagement.DTO;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,10 +12,11 @@ public class UserDTO {
 
     private Long id;
 
-    @NotNull(message = "O email do usuário é obrigatório.")
+    @NotBlank(message = "O EMAIL não deve estar em branco.")
+    @Email(message = "EMAIL inválido.")
     private String email;
 
-    @NotNull(message = "A senha do usuário é obrigatória.")
+    @NotBlank(message = "O SENHA não deve estar em branco.")
     private String password;
 
     @Override

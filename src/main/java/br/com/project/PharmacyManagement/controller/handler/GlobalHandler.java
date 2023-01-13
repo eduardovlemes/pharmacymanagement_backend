@@ -6,10 +6,11 @@ import br.com.project.PharmacyManagement.service.exception.NotFoundException;
 import br.com.project.PharmacyManagement.service.exception.ServerSideException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalHandler {
 
     @ExceptionHandler(NotFoundException.class)
@@ -42,5 +43,14 @@ public class GlobalHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity treatMethodArgumentNotValidException(Exception e){
+        return new ResponseEntity(
+                new DefaultErrorResponse(
+                        HttpStatus.BAD_REQUEST.value(),
+                        e.getMessage(),
+                        e.getCause()
+                ),
+                HttpStatus.BAD_REQUEST);
+    }
 }

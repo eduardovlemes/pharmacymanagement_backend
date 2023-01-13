@@ -19,7 +19,7 @@ public class PharmacyEntity {
     @Column(name = "corporate_name", nullable = false)
     private String corporateName;
 
-    @Column(name = "cnpj", nullable = false,length = 14)
+    @Column(name = "cnpj", nullable = false,length = 18)
     private String cnpj;
 
     @Column(name = "trade_name", nullable = false)
@@ -28,10 +28,10 @@ public class PharmacyEntity {
     @Column(name = "email", nullable = false, length = 150)
     private String email;
 
-    @Column(name = "phone", length = 10)
+    @Column(name = "phone", length = 13)
     private String phone;
 
-    @Column(name = "cellphone", nullable = false, length = 11)
+    @Column(name = "cellphone", nullable = false, length = 14)
     private String cellphone;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

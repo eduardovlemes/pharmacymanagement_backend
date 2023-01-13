@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/usuario")
 public class UserEntityController {
@@ -19,7 +21,7 @@ public class UserEntityController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<DefaultResponse> createUser(
-            @RequestBody UserDTO userDTO){
+            @RequestBody @Valid UserDTO userDTO){
 
             UserEntity user = userEntityService.saveUser(userDTO);
 
@@ -35,7 +37,7 @@ public class UserEntityController {
 
     @GetMapping("/login")
     public ResponseEntity<DefaultResponse> login(
-            @RequestBody UserDTO userDTO) {
+            @RequestBody @Valid UserDTO userDTO) {
 
         Long id = userEntityService.findByEmailAndPassword(userDTO);
 

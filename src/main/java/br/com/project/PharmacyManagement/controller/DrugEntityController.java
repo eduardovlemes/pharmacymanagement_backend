@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class DrugEntityController {
 
     @PostMapping
     public ResponseEntity<DefaultResponse> createDrug(
-            @RequestBody DrugDTO drugDTO){
+            @RequestBody @Valid DrugDTO drugDTO){
 
         DrugEntity drug = drugEntityService.saveDrug(drugDTO);
 
@@ -73,7 +74,7 @@ public class DrugEntityController {
     @PutMapping("/{id}")
     public ResponseEntity<DefaultResponse> updateDrug(
             @PathVariable Long id,
-            @RequestBody DrugDTO drugDTO){
+            @RequestBody @Valid DrugDTO drugDTO){
 
         DrugEntity drug = drugEntityService.updateDrugById(id, drugDTO);
 

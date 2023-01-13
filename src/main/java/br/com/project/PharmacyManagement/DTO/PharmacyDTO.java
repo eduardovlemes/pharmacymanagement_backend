@@ -1,30 +1,31 @@
 package br.com.project.PharmacyManagement.DTO;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 public class PharmacyDTO {
     private Long id;
 
-    @NotNull(message = "A razão social da farmácia é obrigatório.")
+    @NotBlank(message = "A RAZÃO SOCIAL não deve estar em branco.")
     private String corporateName;
 
-    @NotNull(message = "O CNPJ da farmácia é obrigatório.")
+    @NotBlank(message = "O CNPJ não deve estar em branco.")
     private String cnpj;
 
-    @NotNull(message = "O nome fantasia da farmácia é obrigatório.")
+    @NotBlank(message = "O NOME FANTASIA não deve estar em branco.")
     private String tradeName;
 
-    @NotNull(message = "O email da farmácia é obrigatório.")
+    @NotBlank(message = "O EMAIL não deve estar em branco.")
+    @Email(message = "EMAIL inválido.")
     private String email;
 
     private String phone;
 
-    @NotNull(message = "O celular da farmácia é obrigatório.")
+    @NotBlank(message = "O CELULAR não deve estar em branco.")
     private String cellphone;
 
     private AddressDTO address;

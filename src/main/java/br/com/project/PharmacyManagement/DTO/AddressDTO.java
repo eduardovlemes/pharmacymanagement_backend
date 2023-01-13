@@ -1,5 +1,6 @@
 package br.com.project.PharmacyManagement.DTO;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,30 +13,30 @@ public class AddressDTO {
 
     private Long id;
 
-    @NotNull(message = "O CEP do endereço é obrigatório.")
+    @NotBlank(message = "O CEP não deve estar em branco.")
     private String cep;
 
-    @NotNull(message = "A rua do endereço é obrigatório.")
+    @NotBlank(message = "A RUA não deve estar em branco.")
     private String logradouro;
 
-    @NotNull(message = "O número do endereço é obrigatório.")
+    @NotNull(message = "O NÚMERO não deve estar em branco.")
     private Integer number;
 
-    @NotNull(message = "O bairro do endereço é obrigatório.")
+    @NotBlank(message = "O BAIRRO não deve estar em branco.")
     private String bairro;
 
-    @NotNull(message = "A cidade do endereço é obrigatório.")
+    @NotBlank(message = "A CIDADE não deve estar em branco.")
     private String localidade;
 
-    @NotNull(message = "O estado do endereço é obrigatório.")
+    @NotBlank(message = "O ESTADO não deve estar em branco.")
     private String uf;
 
     private String addressCompl;
 
-    @NotNull(message = "A latitude do endereço é obrigatório.")
+    @NotNull(message = "A LATITUDE não deve estar em branco.")
     private BigDecimal latitude;
 
-    @NotNull(message = "A longitude do endereço é obrigatório.")
+    @NotNull(message = "A LONGITUDE não deve estar em branco.")
     private BigDecimal longitude;
 
     @Override

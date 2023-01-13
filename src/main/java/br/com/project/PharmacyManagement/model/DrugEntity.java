@@ -23,7 +23,7 @@ public class DrugEntity {
     @Column(name = "lab", nullable = false, length = 150)
     private String lab;
 
-    @Column(name = "dosage", nullable = false, length = 4)
+    @Column(name = "dosage", nullable = false, length = 7)
     private String dosage;
 
     @Column(name = "description")
