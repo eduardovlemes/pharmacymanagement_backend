@@ -1,12 +1,14 @@
 package br.com.project.PharmacyManagement.controller;
 
 import br.com.project.PharmacyManagement.DTO.DefaultErrorResponse.DefaultResponse;
-import br.com.project.PharmacyManagement.DTO.UserDTO;
 import br.com.project.PharmacyManagement.model.UserEntity;
 import br.com.project.PharmacyManagement.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,9 +23,9 @@ public class UserEntityController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<DefaultResponse> createUser(
-            @RequestBody @Valid UserDTO userDTO){
+            @RequestBody @Valid UserEntity userEntity){
 
-            UserEntity user = userEntityService.saveUser(userDTO);
+            UserEntity user = userEntityService.saveUser(userEntity);
 
             return new ResponseEntity<>(
                     new DefaultResponse<UserEntity>(
@@ -37,14 +39,20 @@ public class UserEntityController {
 
     @GetMapping("/login")
     public ResponseEntity<DefaultResponse> login(
-            @RequestBody @Valid UserDTO userDTO) {
+            @RequestBody @Valid UserEntity user) {
 
-        Long id = userEntityService.findByEmailAndPassword(userDTO);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+       userEntityService.loadUserByUsername(user.getUsername());
+
+        //Long id = userEntityService.loadUserByUsername(user);
 
         return new ResponseEntity<>(
-                new DefaultResponse<Long>(
+                new DefaultResponse<UserEntity>(
                         HttpStatus.OK.value(),
-                        id,
+                        user,
                         "Id encontrado com sucesso!"
                 ),
                 HttpStatus.OK
