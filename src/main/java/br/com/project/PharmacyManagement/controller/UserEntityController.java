@@ -2,14 +2,15 @@ package br.com.project.PharmacyManagement.controller;
 
 import br.com.project.PharmacyManagement.DTO.DefaultErrorResponse.DefaultResponse;
 import br.com.project.PharmacyManagement.model.UserEntity;
+import br.com.project.PharmacyManagement.security.PMJwtAuthenticationProvider;
 import br.com.project.PharmacyManagement.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,9 @@ public class UserEntityController {
 
     @Autowired
     UserEntityService userEntityService;
+
+    @Autowired
+    PMJwtAuthenticationProvider provider;
 
 
     @PostMapping("/cadastro")
@@ -37,25 +41,17 @@ public class UserEntityController {
             );
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<DefaultResponse> login(
+    @PostMapping("/login")
+    public ResponseEntity<String> login(
             @RequestBody @Valid UserEntity user) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean authorized = userEntityService.isAuthorized(user);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        if(authorized){
+            String s = provider.generateToken(user.getUsername());
+            return new ResponseEntity<String>(s, HttpStatus.OK);
+        }
 
-       userEntityService.loadUserByUsername(user.getUsername());
-
-        //Long id = userEntityService.loadUserByUsername(user);
-
-        return new ResponseEntity<>(
-                new DefaultResponse<UserEntity>(
-                        HttpStatus.OK.value(),
-                        user,
-                        "Id encontrado com sucesso!"
-                ),
-                HttpStatus.OK
-        );
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
 }

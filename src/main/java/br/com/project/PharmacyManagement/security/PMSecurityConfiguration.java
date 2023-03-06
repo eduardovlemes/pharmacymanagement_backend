@@ -40,9 +40,8 @@ public class PMSecurityConfiguration {
 
                 .and()
                 .authorizeHttpRequests((auth) ->
-                        auth//.anyRequest().authenticated()
+                        auth
                                 .requestMatchers(HttpMethod.POST,"/usuario/**").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/usuario/**").hasAnyRole("ADMINISTRATOR", "MANAGER", "COLLABORATOR")
 
                                 .requestMatchers(HttpMethod.POST,"/farmacia/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.GET,"/farmacia/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")

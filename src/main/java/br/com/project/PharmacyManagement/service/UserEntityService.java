@@ -2,7 +2,6 @@ package br.com.project.PharmacyManagement.service;
 
 import br.com.project.PharmacyManagement.model.UserEntity;
 import br.com.project.PharmacyManagement.repository.UserEntityRepository;
-import br.com.project.PharmacyManagement.security.PMJwtAuthenticationProvider;
 import br.com.project.PharmacyManagement.service.exception.ServerSideException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -23,7 +22,7 @@ public class UserEntityService implements UserDetailsService {
         try {
             UserEntity user = new UserEntity();
             user.setEmail(userEntity.getEmail());
-            user.setPassword(new PMJwtAuthenticationProvider().generateToken(userEntity.getPassword()));;
+            user.setPassword(userEntity.getPassword());
             user.setRoles(userEntity.getRoles());
 
             return userEntityRepository.save(user);
@@ -33,16 +32,16 @@ public class UserEntityService implements UserDetailsService {
         }
     }
 
-//    public Long findByEmailAndPassword(UserEntity userEntity) {
-//
-//        try {
-//            UserEntity user = userEntityRepository.findByEmail(userEntity.getEmail()); //, userDTO.getPassword()
-//
-//            return user.getId();
-//        } catch (Exception e){
-//            throw new NotFoundException("O usuário(a) solicitado não foi encontrado. Mensagem localizada:" + e.getLocalizedMessage());
-//        }
-//    }
+    public boolean isAuthorized(UserEntity userEntity){
+        UserEntity user = userEntityRepository.findByEmailAndPassword(userEntity.getUsername(), userEntity.getPassword());
+
+
+        if(user == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado!");
+        }
+
+        return true;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
