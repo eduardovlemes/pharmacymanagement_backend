@@ -1,12 +1,10 @@
 package br.com.project.PharmacyManagement.security;
 
-import br.com.project.PharmacyManagement.service.UserEntityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,29 +13,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class PMSecurityConfiguration {
+@RequiredArgsConstructor
+public class SecurityConfiguration {
 
-    @Autowired
-    private UserEntityService userEntityService;
-
-    @Autowired
-    private PMJwtUserEntryPoint pmJwtUserEntryPoint;
+    private final PMJwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public PMJwtAuthenticationFilter filter() {
-        return new PMJwtAuthenticationFilter();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http
-                .exceptionHandling()
-                .authenticationEntryPoint(pmJwtUserEntryPoint)
-                .and()
-                .csrf().disable()
+//                .csrf()
+//                .disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/usuario/**").permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
+                .csrf()
+                .disable()
+                .authenticationProvider(authenticationProvider)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests((auth) ->
                         auth
@@ -52,16 +54,13 @@ public class PMSecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET,"/medicamentos/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.PUT,"/medicamentos/**").hasAnyRole("MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.DELETE,"/medicamentos/**").hasAnyRole("ADMINISTRATOR")
-                        );
 
-        http.addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class);
+                                .requestMatchers(HttpMethod.GET,"/demo/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
+                );
+
+        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception{
-        return configuration.getAuthenticationManager();
     }
 }

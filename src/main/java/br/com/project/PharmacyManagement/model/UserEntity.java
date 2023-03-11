@@ -1,23 +1,22 @@
 package br.com.project.PharmacyManagement.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+@Data
+@Builder
 @Entity
 @Table (name="user")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity implements UserDetails {
+public class UserEntity implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
@@ -41,10 +40,10 @@ public class UserEntity implements UserDetails {
 
     private List<RoleEntity> roles;
 
-    public UserEntity(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+//    public UserEntity(String email, String password) {
+//        this.email = email;
+//        this.password = password;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,12 +52,12 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email;
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     @Override
