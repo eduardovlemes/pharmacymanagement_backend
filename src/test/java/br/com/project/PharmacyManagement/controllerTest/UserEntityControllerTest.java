@@ -1,4 +1,4 @@
-package br.com.project.PharmacyManagement;
+package br.com.project.PharmacyManagement.controllerTest;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -25,7 +25,7 @@ import java.net.URI;
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
 @Transactional
-public class PharmacyEntityControllerTest {
+public class UserEntityControllerTest {
 
     private URI path;
     private MockHttpServletRequest mockHttpServletRequest;
@@ -38,70 +38,50 @@ public class PharmacyEntityControllerTest {
 
     @Before
     public void setUp() throws Exception {
+        String json = "{\"email\":\"edu@rdo\",\"password\":\"1234\"}";
 
-        String json = "{\"email\": \"edu@rdo\", \"password\": \"1234\"}";
-        path = new URI ("/login");
+        path = new URI ("/usuario/login");
+
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(path).contentType(MediaType.APPLICATION_JSON).content(json);
+
         expectedResult = MockMvcResultMatchers.status().isOk();
+
         String response = mock.perform(request).andExpect(expectedResult).andReturn().getResponse().getContentAsString();
+
         JSONObject data = new JSONObject(response);
+
         jwtToken = data.getString("Authorization");
     }
 
     @Test
-    public void createPharmacyTest() throws Exception{
-        String jsonCadastro = "{\"email\": \"edu@rdo\",\"password\": \"1234\"}";
-        path = new URI("/farmacia");
+    public void registerUserTest() throws Exception{
+        String jsonRegister = "{\"email\":\"edu@rdo\",\"password\":\"1234\",\"roles\":[{\"roleName\":\"ROLE_ADMINISTRATOR\"}]}";
+
+        path = new URI("/usuario/cadastro");
+
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(path)
-                .content(jsonCadastro)
+                .content(jsonRegister)
                 .header("Content-Type", "application/json")
                 .header("Authorization", jwtToken);
+
         expectedResult = MockMvcResultMatchers.status().isCreated();
-        mock.perform(request).andExpect(expectedResult);
-    }
 
-
-    @Test
-    public void UpdatePharmacyByIdTest() throws Exception {
-        String jsonAtualiza = "{\"id\": \"2\", \"email\": \"edu@rdo\", \"password\": \"1234\"}";
-        path = new URI("/farmacia");
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put(path)
-                .content(jsonAtualiza)
-                .header("Content-Type", "application/json")
-                .header("Authorization", jwtToken);
-        expectedResult = MockMvcResultMatchers.status().isOk();
         mock.perform(request).andExpect(expectedResult);
     }
 
     @Test
-    public void deletePharmacyByIdTest() throws Exception {
-        path = new URI("/farmacia");
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(path)
-                .param("id","2")
-                .header("Content-Type", "application/json")
-                .header("Authorization", jwtToken);
-        expectedResult = MockMvcResultMatchers.status().isOk();
-        mock.perform(request).andExpect(expectedResult);
-    }
+    public void authenticateUserTest() throws Exception {
+        String jsonAuthenticate = "{\"email\":\"edu@rdo\",\"password\":\"1234\"}";
 
-    @Test
-    public void getAllPharmaciesTest() throws Exception{
-        path = new URI("/farmacia");
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(path)
-                .header("Content-Type", "application/json")
-                .header("Authorization", jwtToken);
-        expectedResult = MockMvcResultMatchers.status().isOk();
-        mock.perform(request).andExpect(expectedResult);
-    }
+        path = new URI("/usuario/login");
 
-    @Test
-    public void getPharmacyByIdTest() throws Exception{
-        path = new URI("/farmacia/");
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(path)
-                .param("id","2")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(path)
+                .content(jsonAuthenticate)
                 .header("Content-Type", "application/json")
                 .header("Authorization", jwtToken);
+
         expectedResult = MockMvcResultMatchers.status().isOk();
+
         mock.perform(request).andExpect(expectedResult);
     }
 }

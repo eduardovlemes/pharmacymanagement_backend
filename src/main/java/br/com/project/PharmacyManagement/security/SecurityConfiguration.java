@@ -54,8 +54,6 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET,"/medicamentos/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.PUT,"/medicamentos/**").hasAnyRole("MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.DELETE,"/medicamentos/**").hasAnyRole("ADMINISTRATOR")
-
-                                .requestMatchers(HttpMethod.GET,"/demo/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                 );
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
