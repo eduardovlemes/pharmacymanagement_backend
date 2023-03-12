@@ -1,53 +1,34 @@
 package br.com.project.PharmacyManagement.controller;
 
-import br.com.project.PharmacyManagement.DTO.DefaultErrorResponse.DefaultResponse;
-import br.com.project.PharmacyManagement.DTO.UserDTO;
+import br.com.project.PharmacyManagement.controller.auth.AuthenticationRequest;
+import br.com.project.PharmacyManagement.controller.auth.AuthenticationResponse;
 import br.com.project.PharmacyManagement.model.UserEntity;
 import br.com.project.PharmacyManagement.service.UserEntityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuario")
+@RequiredArgsConstructor
 public class UserEntityController {
 
-    @Autowired
-    UserEntityService userEntityService;
-
+    private final UserEntityService userEntityService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<DefaultResponse> createUser(
-            @RequestBody @Valid UserDTO userDTO){
-
-            UserEntity user = userEntityService.saveUser(userDTO);
-
-            return new ResponseEntity<>(
-                    new DefaultResponse<UserEntity>(
-                            HttpStatus.CREATED.value(),
-                            user,
-                            "Usuário(a) cadastrado(a) com sucesso!"
-                    ),
-                    HttpStatus.CREATED
-            );
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody UserEntity userEntity
+    ) {
+        return ResponseEntity.ok(userEntityService.register(userEntity));
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<DefaultResponse> login(
-            @RequestBody @Valid UserDTO userDTO) {
-
-        Long id = userEntityService.findByEmailAndPassword(userDTO);
-
-        return new ResponseEntity<>(
-                new DefaultResponse<Long>(
-                        HttpStatus.OK.value(),
-                        id,
-                        "Id encontrado com sucesso!"
-                ),
-                HttpStatus.OK
-        );
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody AuthenticationRequest request
+    ) {
+        return ResponseEntity.ok(userEntityService.authenticate(request));
     }
 }
