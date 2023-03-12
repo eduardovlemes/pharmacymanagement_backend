@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
@@ -58,7 +57,7 @@ public class PharmacyEntityControllerTest {
     }
 
     @Test
-    public void createPharmacyTest() throws Exception{
+    public void createPharmacyAsAdmin() throws Exception{
         String jsonRegister = "{\"corporateName\":\"Clamed\",\"cnpj\":\"84.683.481/0001-77\",\"tradeName\":\"CATARINENSE\",\"email\":\"c@pp.com\",\"phone\":\"(47)3030-3030\",\"cellphone\":\"(47)98899-5544\",\"address\":{\"cep\":\"89201400\",\"number\":638,\"addressCompl\":\"Aolado\",\"latitude\":-42.00000,\"longitude\":-27.0000}}";
 
         path = new URI("/farmacia");
@@ -75,7 +74,7 @@ public class PharmacyEntityControllerTest {
 
 
     @Test
-    public void updatePharmacyByIdTest() throws Exception {
+    public void updatePharmacyByIdAsAdmin() throws Exception {
         String jsonUpdate = "{\"corporateName\":\"Clamed\",\"cnpj\":\"84.683.481/0001-77\",\"tradeName\":\"FORMULA\",\"email\":\"c@pp.com\",\"phone\":\"(47)3030-3030\",\"cellphone\":\"(47)98899-5544\",\"address\":{\"cep\":\"89201400\",\"logradouro\":\"\",\"number\":1200,\"bairro\":\"\",\"localidade\":\"\",\"uf\":\"sc\",\"addressCompl\":\"Emfrente\",\"latitude\":-42.00000,\"longitude\":-27.0000}}";
 
         path = new URI("/farmacia/1");
@@ -92,7 +91,7 @@ public class PharmacyEntityControllerTest {
     }
 
     @Test
-    public void deletePharmacyByIdTest() throws Exception {
+    public void deletePharmacyByIdAsAdmin() throws Exception {
         path = new URI("/farmacia/1");
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(path)
@@ -106,7 +105,7 @@ public class PharmacyEntityControllerTest {
     }
 
     @Test
-    public void getAllPharmaciesTest() throws Exception{
+    public void getAllPharmaciesAsAdmin() throws Exception{
 
         path = new URI("/farmacia");
 
@@ -120,7 +119,7 @@ public class PharmacyEntityControllerTest {
     }
 
     @Test
-    public void getPharmacyByIdTest() throws Exception{
+    public void getPharmacyByIdAsAdmin() throws Exception{
         path = new URI("/farmacia");
 
         MockHttpServletRequestBuilder requestBody = MockMvcRequestBuilders.get(path)
