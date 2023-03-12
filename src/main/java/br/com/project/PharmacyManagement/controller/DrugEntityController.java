@@ -21,7 +21,6 @@ public class DrugEntityController {
     @Autowired
     DrugEntityService drugEntityService;
 
-
     @PostMapping
     public ResponseEntity<DefaultResponse> createDrug(
             @RequestBody @Valid DrugDTO drugDTO){
@@ -38,7 +37,6 @@ public class DrugEntityController {
         );
     }
 
-
     @GetMapping
     public ResponseEntity<DefaultResponse> getALlDrugs() {
 
@@ -54,7 +52,6 @@ public class DrugEntityController {
         );
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<DefaultResponse> getDrugById (@PathVariable Long id){
 
@@ -69,7 +66,6 @@ public class DrugEntityController {
                 HttpStatus.OK
         );
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<DefaultResponse> updateDrug(
@@ -87,7 +83,6 @@ public class DrugEntityController {
                 HttpStatus.OK
         );
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DefaultResponse> deleteDrug(
