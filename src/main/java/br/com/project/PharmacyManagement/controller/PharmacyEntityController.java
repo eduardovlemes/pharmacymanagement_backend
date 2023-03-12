@@ -28,7 +28,6 @@ public class PharmacyEntityController {
     @Autowired
     private PharmacyEntityService pharmacyEntityService;
 
-
     @PostMapping
     public ResponseEntity<DefaultResponse> createPharmacy(
             @RequestBody @Valid PharmacyDTO pharmacyDTO) throws Exception {
@@ -64,7 +63,6 @@ public class PharmacyEntityController {
         );
     }
 
-
     @GetMapping
     public ResponseEntity<DefaultResponse> getAllPharmacy(){
 
@@ -80,7 +78,6 @@ public class PharmacyEntityController {
         );
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<DefaultResponse> getPharmacyById(@PathVariable Long id) {
 
@@ -95,7 +92,6 @@ public class PharmacyEntityController {
                 HttpStatus.OK
         );
     }
-
 
     @PutMapping("/{id}")
     public  ResponseEntity<DefaultResponse> updatePharmacy(
@@ -131,7 +127,6 @@ public class PharmacyEntityController {
                 HttpStatus.OK
         );
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DefaultResponse> deletePharmacy(

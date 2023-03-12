@@ -40,11 +40,6 @@ public class UserEntity implements UserDetails{
 
     private List<RoleEntity> roles;
 
-//    public UserEntity(String email, String password) {
-//        this.email = email;
-//        this.password = password;
-//    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles;

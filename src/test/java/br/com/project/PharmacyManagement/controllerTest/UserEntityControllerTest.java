@@ -34,7 +34,7 @@ public class UserEntityControllerTest {
     @Autowired
     private MockMvc mock;
 
-    private String jwtToken;
+    private String token;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +50,7 @@ public class UserEntityControllerTest {
 
         JSONObject data = new JSONObject(response);
 
-        jwtToken = data.getString("Authorization");
+        token = data.getString("Authorization");
     }
 
     @Test
@@ -62,7 +62,7 @@ public class UserEntityControllerTest {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(path)
                 .content(jsonRegister)
                 .header("Content-Type", "application/json")
-                .header("Authorization", jwtToken);
+                .header("Authorization", token);
 
         expectedResult = MockMvcResultMatchers.status().isCreated();
 
@@ -78,7 +78,7 @@ public class UserEntityControllerTest {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(path)
                 .content(jsonAuthenticate)
                 .header("Content-Type", "application/json")
-                .header("Authorization", jwtToken);
+                .header("Authorization", token);
 
         expectedResult = MockMvcResultMatchers.status().isOk();
 

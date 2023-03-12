@@ -16,36 +16,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    //private final PMJwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public PMJwtAuthenticationFilter filter() {
-        return new PMJwtAuthenticationFilter();
+    public JwtAuthenticationFilter filter() {
+        return new JwtAuthenticationFilter();
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http
-//                .csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/usuario/**").permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-                //.csrf()
-                //.disable()
-                //.authenticationProvider(authenticationProvider)
-                //.sessionManagement()
-                //.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                //.and()
                 .csrf()
                 .disable()
                 .authenticationProvider(authenticationProvider)
@@ -56,8 +36,6 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers(HttpMethod.POST,"/usuario/**").permitAll()
 
-                                //.requestMatchers(HttpMethod.POST,"/farmacia").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
-                                //.requestMatchers(HttpMethod.GET,"/farmacia").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.POST,"/farmacia/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.GET,"/farmacia/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.PUT,"/farmacia/**").hasAnyRole("MANAGER", "ADMINISTRATOR")
@@ -70,9 +48,7 @@ public class SecurityConfiguration {
 
                                 .requestMatchers(HttpMethod.GET,"/demo/**").hasAnyRole("COLLABORATOR", "MANAGER", "ADMINISTRATOR")
                 );
-
         http.addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }

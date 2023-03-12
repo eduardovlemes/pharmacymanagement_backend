@@ -64,7 +64,6 @@ public class UserEntityService implements UserDetailsService {
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("Usuário não encontrado");
         }
-
         return new User(user.get().getUsername(), user.get().getPassword(), user.get().getAuthorities());
     }
 }
