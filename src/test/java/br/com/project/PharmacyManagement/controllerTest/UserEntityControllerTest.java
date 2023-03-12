@@ -28,7 +28,7 @@ import java.net.URI;
 public class UserEntityControllerTest {
 
     private URI path;
-    private MockHttpServletRequest mockHttpServletRequest;
+    private MockHttpServletRequest request;
     private ResultMatcher expectedResult;
 
     @Autowired
@@ -50,7 +50,7 @@ public class UserEntityControllerTest {
 
         JSONObject data = new JSONObject(response);
 
-        token = data.getString("Authorization");
+        token = data.getString("token");
     }
 
     @Test
@@ -64,7 +64,7 @@ public class UserEntityControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token);
 
-        expectedResult = MockMvcResultMatchers.status().isCreated();
+        expectedResult = MockMvcResultMatchers.status().isOk();
 
         mock.perform(request).andExpect(expectedResult);
     }
