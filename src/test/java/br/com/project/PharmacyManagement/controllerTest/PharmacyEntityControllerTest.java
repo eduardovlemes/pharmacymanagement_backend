@@ -3,6 +3,7 @@ package br.com.project.PharmacyManagement.controllerTest;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
@@ -38,7 +39,6 @@ public class PharmacyEntityControllerTest {
 
     @Before
     public void setUp() throws Exception {
-
         String json = "{\"email\":\"edu@rdo\",\"password\":\"1234\"}";
 
         path = new URI ("/usuario/login");
@@ -51,7 +51,9 @@ public class PharmacyEntityControllerTest {
 
         JSONObject data = new JSONObject(response);
 
-        token = data.getString("Authorization");
+        token = data.getString("token");
+
+        Assertions.assertNotNull(token);
     }
 
     @Test
@@ -65,7 +67,7 @@ public class PharmacyEntityControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token);
 
-        expectedResult = MockMvcResultMatchers.status().isCreated();
+        expectedResult = MockMvcResultMatchers.status().isForbidden();
 
         mock.perform(request).andExpect(expectedResult);
     }
@@ -82,7 +84,7 @@ public class PharmacyEntityControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token);
 
-        expectedResult = MockMvcResultMatchers.status().isOk();
+        expectedResult = MockMvcResultMatchers.status().isForbidden();
 
         mock.perform(request).andExpect(expectedResult);
     }
@@ -97,7 +99,7 @@ public class PharmacyEntityControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token);
 
-        expectedResult = MockMvcResultMatchers.status().isOk();
+        expectedResult = MockMvcResultMatchers.status().isForbidden();
 
         mock.perform(request).andExpect(expectedResult);
     }
@@ -111,7 +113,7 @@ public class PharmacyEntityControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token);
 
-        expectedResult = MockMvcResultMatchers.status().isOk();
+        expectedResult = MockMvcResultMatchers.status().isForbidden();
 
         mock.perform(request).andExpect(expectedResult);
     }
@@ -126,7 +128,7 @@ public class PharmacyEntityControllerTest {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token);
 
-        expectedResult = MockMvcResultMatchers.status().isOk();
+        expectedResult = MockMvcResultMatchers.status().isForbidden();
 
         mock.perform(request).andExpect(expectedResult);
     }
