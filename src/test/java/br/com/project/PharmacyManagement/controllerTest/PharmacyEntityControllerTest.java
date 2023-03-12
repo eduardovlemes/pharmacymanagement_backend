@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
@@ -62,44 +63,44 @@ public class PharmacyEntityControllerTest {
 
         path = new URI("/farmacia");
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(path)
-                .content(jsonRegister)
+        MockHttpServletRequestBuilder requestBody = MockMvcRequestBuilders.post(path)
+                .header("Authorization","Bearer " + token)
                 .header("Content-Type", "application/json")
-                .header("Authorization", token);
+                .content(jsonRegister);
 
-        expectedResult = MockMvcResultMatchers.status().isForbidden();
+        expectedResult = MockMvcResultMatchers.status().isCreated();
 
-        mock.perform(request).andExpect(expectedResult);
+        mock.perform(requestBody).andExpect(expectedResult);
     }
 
 
     @Test
-    public void UpdatePharmacyByIdTest() throws Exception {
+    public void updatePharmacyByIdTest() throws Exception {
         String jsonUpdate = "{\"corporateName\":\"Clamed\",\"cnpj\":\"84.683.481/0001-77\",\"tradeName\":\"FORMULA\",\"email\":\"c@pp.com\",\"phone\":\"(47)3030-3030\",\"cellphone\":\"(47)98899-5544\",\"address\":{\"cep\":\"89201400\",\"logradouro\":\"\",\"number\":1200,\"bairro\":\"\",\"localidade\":\"\",\"uf\":\"sc\",\"addressCompl\":\"Emfrente\",\"latitude\":-42.00000,\"longitude\":-27.0000}}";
 
-        path = new URI("/farmacia");
+        path = new URI("/farmacia/1");
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put(path)
-                .content(jsonUpdate)
+        MockHttpServletRequestBuilder requestBody = MockMvcRequestBuilders.put(path)
+                .header("Authorization","Bearer " + token)
                 .header("Content-Type", "application/json")
-                .header("Authorization", token);
+                .param("id", String.valueOf(1))
+                .content(jsonUpdate);
 
-        expectedResult = MockMvcResultMatchers.status().isForbidden();
+        expectedResult = MockMvcResultMatchers.status().isOk();
 
-        mock.perform(request).andExpect(expectedResult);
+        mock.perform(requestBody).andExpect(expectedResult);
     }
 
     @Test
     public void deletePharmacyByIdTest() throws Exception {
-
-        path = new URI("/farmacia");
+        path = new URI("/farmacia/1");
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(path)
-                .param("id","2")
+                .header("Authorization","Bearer " + token)
                 .header("Content-Type", "application/json")
-                .header("Authorization", token);
+                .param("id", String.valueOf(1));
 
-        expectedResult = MockMvcResultMatchers.status().isForbidden();
+        expectedResult = MockMvcResultMatchers.status().isAccepted();
 
         mock.perform(request).andExpect(expectedResult);
     }
@@ -110,26 +111,25 @@ public class PharmacyEntityControllerTest {
         path = new URI("/farmacia");
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(path)
-                .header("Content-Type", "application/json")
-                .header("Authorization", token);
+                .header("Authorization", "Bearer " +  token)
+                .header("Content-Type", "application/json");
 
-        expectedResult = MockMvcResultMatchers.status().isForbidden();
+        expectedResult = MockMvcResultMatchers.status().isOk();
 
         mock.perform(request).andExpect(expectedResult);
     }
 
     @Test
     public void getPharmacyByIdTest() throws Exception{
-
         path = new URI("/farmacia");
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(path)
-                .param("id","2")
+        MockHttpServletRequestBuilder requestBody = MockMvcRequestBuilders.get(path)
                 .header("Content-Type", "application/json")
-                .header("Authorization", token);
+                .header("Authorization", "Bearer " +  token)
+                .param("id", String.valueOf(2));
 
-        expectedResult = MockMvcResultMatchers.status().isForbidden();
+        expectedResult = MockMvcResultMatchers.status().isOk();
 
-        mock.perform(request).andExpect(expectedResult);
+        mock.perform(requestBody).andExpect(expectedResult);
     }
 }
