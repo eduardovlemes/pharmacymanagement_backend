@@ -20,7 +20,7 @@ public class RoleEntity implements GrantedAuthority {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "roleName", nullable = false)
+    @Column(name = "role_name", nullable = false)
     private String roleName;
 
     @Override

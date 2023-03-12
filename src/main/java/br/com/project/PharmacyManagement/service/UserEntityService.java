@@ -8,12 +8,18 @@ import br.com.project.PharmacyManagement.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class UserEntityService{
+public class UserEntityService implements UserDetailsService {
 
     private final UserEntityRepository userEntityRepository;
     private final PasswordEncoder passwordEncoder;
@@ -49,5 +55,16 @@ public class UserEntityService{
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<UserEntity> user = this.userEntityRepository.findByEmail(username);
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("Usuário não encontrado");
+        }
+
+        return new User(user.get().getUsername(), user.get().getPassword(), user.get().getAuthorities());
     }
 }
